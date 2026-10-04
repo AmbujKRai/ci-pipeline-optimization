@@ -6,7 +6,9 @@
   "features": {
     // "moby": false installs Docker CE from docker.com; the Moby packages are not available
     // for the Debian release (trixie) the Python image is based on.
-    "ghcr.io/devcontainers/features/docker-in-docker:4": { "moby": false }
+    "ghcr.io/devcontainers/features/docker-in-docker:4": { "moby": false },
+    // Lets `gh codespace ssh` open a terminal from your own machine.
+    "ghcr.io/devcontainers/features/sshd:1": {}
   },
   "hostRequirements": {
     "cpus": 2,

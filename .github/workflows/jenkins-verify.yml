@@ -1,0 +1,49 @@
+# Proves the Jenkins setup works: builds the Jenkins image, starts it on the runner with
+# Docker Compose (configured entirely as code), runs both Jenkins pipelines and fails unless
+# both succeed. No one has to install Docker or Jenkins locally to know it works.
+name: Jenkins Verify
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "jenkins/**"
+      - "Jenkinsfile"
+      - "Jenkinsfile.baseline"
+      - ".github/workflows/jenkins-verify.yml"
+  pull_request:
+    paths:
+      - "jenkins/**"
+      - "Jenkinsfile"
+      - "Jenkinsfile.baseline"
+      - ".github/workflows/jenkins-verify.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Jenkins pipelines
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - name: Start Jenkins (configuration as code)
+        working-directory: jenkins
+        env:
+          REPO_URL: https://github.com/${{ github.repository }}.git
+          REPO_BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: |
+          password=$(openssl rand -hex 16)
+          echo "::add-mask::$password"
+          echo "JENKINS_PASSWORD=$password" >> "$GITHUB_ENV"
+          JENKINS_ADMIN_PASSWORD="$password" docker compose up -d --build
+      - name: Run both Jenkins pipelines
+        env:
+          JENKINS_URL: http://localhost:8080
+          JENKINS_USER: admin
+        run: python3 jenkins/verify.py ci-optimized ci-baseline | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Jenkins log
+        if: always()
+        run: docker logs shoplite-jenkins 2>&1 | tail -n 150

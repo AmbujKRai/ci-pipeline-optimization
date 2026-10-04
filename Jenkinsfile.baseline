@@ -1,0 +1,61 @@
+// Baseline pipeline for Jenkins: the same work as the optimized Jenkinsfile, but every stage
+// runs one after another, the virtualenv is rebuilt from scratch, the tests run serially
+// and the Docker image is built without any cache.
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+        timeout(time: 40, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+
+    environment {
+        PIP_DISABLE_PIP_VERSION_CHECK = '1'
+        IMAGE = "shoplite:jenkins-baseline-${env.BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Python environment (fresh)') {
+            steps {
+                sh 'rm -rf .venv && python3 -m venv .venv && .venv/bin/pip install --quiet --no-cache-dir -r requirements-dev.txt'
+            }
+        }
+
+        stage('Static checks') {
+            steps {
+                sh '.venv/bin/ruff check . && .venv/bin/ruff format --check . && .venv/bin/bandit -r app -q'
+            }
+        }
+
+        stage('Tests (serial)') {
+            steps {
+                sh '.venv/bin/pytest -p no:xdist -p no:cacheprovider --cov=app --cov-report=xml:coverage.xml --cov-fail-under=85 --junitxml=reports/junit-serial.xml'
+            }
+            post {
+                always {
+                    junit 'reports/junit-serial.xml'
+                }
+            }
+        }
+
+        stage('Docker build (no cache)') {
+            steps {
+                sh 'docker build --no-cache --pull --tag "$IMAGE" --build-arg GIT_SHA="$GIT_COMMIT" .'
+            }
+        }
+
+        stage('Deploy to local staging') {
+            steps {
+                sh 'jenkins/deploy-staging.sh "$IMAGE"'
+            }
+        }
+
+        stage('Smoke test') {
+            steps {
+                sh 'SMOKE_BASE_URL=http://shoplite-staging:8000 SMOKE_EXPECTED_SHA="$GIT_COMMIT" .venv/bin/pytest -m smoke smoke -q -p no:cacheprovider'
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+# A deliberately naive Dockerfile, kept ONLY as the "before" case for the Docker
+# build-caching experiment (E4). Do not deploy it. Its problems:
+#   - `COPY . .` comes before `pip install`, so any code change invalidates the
+#     dependency layer and every build reinstalls all packages;
+#   - the full python image is used (much larger than -slim) and no multi-stage build;
+#   - pip's download cache is baked into the image;
+#   - the container runs as root.
+FROM python:3.12
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+ENV PORT=8000 \
+    DATABASE_URL=sqlite:////tmp/shoplite.db
+EXPOSE 8000
+CMD ["python", "-m", "app"]

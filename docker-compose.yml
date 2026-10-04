@@ -1,0 +1,20 @@
+# Run ShopLite locally in Docker:
+#   docker compose up --build        then open http://localhost:8000
+#
+# Set ADMIN_PASSWORD in a local .env file (git-ignored) to be able to log in as
+# admin@shoplite.local.
+services:
+  shoplite:
+    build:
+      context: .
+      args:
+        GIT_SHA: ${GIT_SHA:-local}
+        BUILD_TIME: ${BUILD_TIME:-unknown}
+    image: shoplite:local
+    container_name: shoplite
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: docker-local
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+    restart: unless-stopped

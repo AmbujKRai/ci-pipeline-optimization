@@ -1,0 +1,27 @@
+# Keep the build context small: only requirements.txt and app/ are needed.
+.git
+.github
+.devcontainer
+.venv
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.ruff_cache
+.coverage*
+coverage.xml
+htmlcov
+reports
+site
+docs
+tests
+scripts
+jenkins
+k8s
+deploy
+docker
+*.md
+*.db
+.test_durations
+docker-compose.yml
+Jenkinsfile*
+.env

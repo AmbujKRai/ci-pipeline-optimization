@@ -1,0 +1,27 @@
+{
+  // Opens the project in GitHub Codespaces (or VS Code Dev Containers) with Python 3.12
+  // and a private Docker engine, so Docker and Jenkins can be used from a browser.
+  "name": "ShopLite CI optimisation",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:4": {}
+  },
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb"
+  },
+  "forwardPorts": [8000, 8080],
+  "portsAttributes": {
+    "8000": { "label": "ShopLite app" },
+    "8080": { "label": "Jenkins" }
+  },
+  "postCreateCommand": "python -m venv .venv && .venv/bin/pip install -r requirements-dev.txt",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "charliermarsh.ruff", "ms-azuretools.vscode-docker"],
+      "settings": {
+        "python.defaultInterpreterPath": ".venv/bin/python"
+      }
+    }
+  }
+}

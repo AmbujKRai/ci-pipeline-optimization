@@ -1,0 +1,54 @@
+# Jenkins Configuration as Code: users, settings and both pipeline jobs.
+# Values like ${JENKINS_ADMIN_PASSWORD} come from the environment (see jenkins/.env.example).
+jenkins:
+  systemMessage: >-
+    ShopLite CI demo: compare the "ci-baseline" and "ci-optimized" pipelines.
+    Everything here is defined in jenkins/casc.yaml.
+  numExecutors: 2
+  mode: NORMAL
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "${JENKINS_ADMIN_ID:-admin}"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+unclassified:
+  location:
+    url: "${JENKINS_URL:-http://localhost:8080/}"
+
+jobs:
+  - script: |
+      pipelineJob('ci-optimized') {
+        description('Optimized pipeline: static checks, four test shards and the Docker build run in parallel, with a cached virtualenv and the Docker layer cache. Defined in Jenkinsfile.')
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url('${REPO_URL:-https://github.com/AmbujKRai/ci-pipeline-optimization.git}') }
+                branch('*/${REPO_BRANCH:-main}')
+              }
+            }
+            scriptPath('Jenkinsfile')
+            lightweight(true)
+          }
+        }
+      }
+      pipelineJob('ci-baseline') {
+        description('Baseline pipeline: the same work run one stage after another with no caching. Defined in Jenkinsfile.baseline.')
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url('${REPO_URL:-https://github.com/AmbujKRai/ci-pipeline-optimization.git}') }
+                branch('*/${REPO_BRANCH:-main}')
+              }
+            }
+            scriptPath('Jenkinsfile.baseline')
+            lightweight(true)
+          }
+        }
+      }

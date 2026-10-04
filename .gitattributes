@@ -1,0 +1,15 @@
+# Normalise line endings. Files that run inside Linux containers or CI must use LF,
+# even when they are edited on Windows.
+* text=auto
+*.py text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+Dockerfile* text eol=lf
+Jenkinsfile* text eol=lf
+.test_durations text eol=lf
+*.png binary
+*.jpg binary

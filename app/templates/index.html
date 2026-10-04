@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}ShopLite · Dashboard{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Store dashboard</h1>
+    <p class="muted">Catalogue, orders and revenue at a glance.</p>
+  </div>
+  <div class="build-card" aria-label="Deployed build">
+    <span class="pill pill-{{ settings.environment }}">{{ settings.environment }}</span>
+    <span>Deployed commit <code data-testid="deployed-sha">{{ short_sha }}</code></span>
+  </div>
+</section>
+
+<section class="kpis">
+  <article class="kpi">
+    <h2>Products</h2>
+    <p class="kpi-value">{{ product_count }}</p>
+    <p class="muted">in the catalogue</p>
+  </article>
+  <article class="kpi">
+    <h2>Orders</h2>
+    <p class="kpi-value">{{ report.order_count }}</p>
+    <p class="muted">{{ report.paid_order_count }} paid or fulfilled</p>
+  </article>
+  <article class="kpi">
+    <h2>Revenue</h2>
+    <p class="kpi-value">{{ report.revenue_paise | inr }}</p>
+    <p class="muted">incl. GST and shipping</p>
+  </article>
+  <article class="kpi">
+    <h2>Average order</h2>
+    <p class="kpi-value">{{ report.average_order_value_paise | inr }}</p>
+    <p class="muted">per paid order</p>
+  </article>
+</section>
+
+<section class="grid-2">
+  <article class="panel">
+    <h2>Top products</h2>
+    {% if report.top_products %}
+    <table>
+      <thead><tr><th>Product</th><th class="num">Units</th><th class="num">Sales</th></tr></thead>
+      <tbody>
+      {% for row in report.top_products %}
+        <tr><td>{{ row.name }}</td><td class="num">{{ row.units }}</td><td class="num">{{ row.revenue_paise | inr }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="muted">No sales yet.</p>{% endif %}
+  </article>
+
+  <article class="panel">
+    <h2>Orders by status</h2>
+    {% set peak = report.orders_by_status.values() | max %}
+    <ul class="bars">
+    {% for status, count in report.orders_by_status.items() %}
+      <li>
+        <span class="bar-label">{{ status }}</span>
+        <span class="bar-track"><span class="bar bar-{{ status }}" style="width: {{ (100 * count / peak) if peak else 0 }}%"></span></span>
+        <span class="bar-count">{{ count }}</span>
+      </li>
+    {% endfor %}
+    </ul>
+    <h3>Low stock</h3>
+    {% if low_stock %}
+    <ul class="low-stock">
+      {% for product in low_stock %}<li>{{ product.name }} <span class="badge">{{ product.stock }} left</span></li>{% endfor %}
+    </ul>
+    {% else %}<p class="muted">Everything is well stocked.</p>{% endif %}
+  </article>
+</section>
+
+<section class="panel">
+  <h2>Catalogue</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Product</th><th>Category</th><th class="num">GST</th><th class="num">Price</th><th class="num">Stock</th></tr></thead>
+      <tbody>
+      {% for product in catalogue %}
+        <tr>
+          <td>{{ product.name }}<br><small class="muted">{{ product.sku }}</small></td>
+          <td>{{ product.category }}</td>
+          <td class="num">{{ gst_rates[product.category] }}%</td>
+          <td class="num">{{ product.price_paise | inr }}</td>
+          <td class="num">{% if product.stock <= 5 %}<span class="badge">{{ product.stock }}</span>{% else %}{{ product.stock }}{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

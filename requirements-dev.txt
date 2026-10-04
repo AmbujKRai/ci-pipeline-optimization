@@ -1,0 +1,23 @@
+# Test and quality tools (on top of the runtime dependencies).
+-r requirements.txt
+bandit==1.9.4
+colorama==0.4.6 ; sys_platform == "win32"
+coverage==7.16.2
+execnet==2.1.2
+httpcore2==2.13.1
+httpx2==2.13.1
+iniconfig==2.3.0
+markdown-it-py==4.2.0
+mdurl==0.1.2
+packaging==26.3
+pluggy==1.6.0
+Pygments==2.21.0
+pytest==9.1.1
+pytest-cov==7.1.0
+pytest-split==0.11.0
+pytest-xdist==3.8.0
+PyYAML==6.0.3
+rich==15.0.0
+ruff==0.16.10
+stevedore==5.9.1
+truststore==0.10.4

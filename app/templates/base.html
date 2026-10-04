@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ShopLite{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="/">Shop<span>Lite</span></a>
+      <nav class="nav">
+        <a href="/docs">API docs</a>
+        <a href="{{ settings.dashboard_url }}" rel="noopener">Pipeline dashboard</a>
+        <a href="{{ settings.repo_url }}" rel="noopener">Source</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="wrap footer">
+    <p>
+      ShopLite {{ version }} · commit <code>{{ short_sha }}</code> · environment
+      <strong>{{ settings.environment }}</strong> · built {{ settings.build_time }}
+    </p>
+    <p class="muted">Demo service for the CI pipeline optimization project. Data resets when the service restarts.</p>
+  </footer>
+</body>
+</html>

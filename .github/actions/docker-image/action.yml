@@ -1,0 +1,80 @@
+name: Build and smoke-test image
+description: >
+  Builds the production image with BuildKit and checks that the container starts, answers
+  /health, reports the right commit and runs as a non-root user. With caching on, layers are
+  read from and written to the GitHub Actions cache (type=gha, mode=max).
+
+inputs:
+  use-cache:
+    description: "'true' to use the Docker layer cache, 'false' for a clean build"
+    default: "true"
+  tags:
+    description: Image tags (newline separated). The first one is used for the smoke test.
+    required: true
+  git-sha:
+    description: Commit SHA baked into the image
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v4
+
+    - name: Build metadata
+      id: meta
+      shell: bash
+      env:
+        TAGS: ${{ inputs.tags }}
+      run: |
+        echo "created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+        echo "local-tag=$(printf '%s\n' "$TAGS" | sed '/^\s*$/d' | head -n 1)" >> "$GITHUB_OUTPUT"
+
+    - name: Build image (layer cache)
+      if: inputs.use-cache == 'true'
+      uses: docker/build-push-action@v7
+      with:
+        context: .
+        load: true
+        tags: ${{ inputs.tags }}
+        build-args: |
+          GIT_SHA=${{ inputs.git-sha }}
+          BUILD_TIME=${{ steps.meta.outputs.created }}
+        cache-from: type=gha,scope=shoplite
+        cache-to: type=gha,scope=shoplite,mode=max
+
+    - name: Build image (no cache)
+      if: inputs.use-cache != 'true'
+      uses: docker/build-push-action@v7
+      with:
+        context: .
+        load: true
+        no-cache: true
+        pull: true
+        tags: ${{ inputs.tags }}
+        build-args: |
+          GIT_SHA=${{ inputs.git-sha }}
+          BUILD_TIME=${{ steps.meta.outputs.created }}
+
+    - name: Container smoke test
+      shell: bash
+      env:
+        IMAGE: ${{ steps.meta.outputs.local-tag }}
+        EXPECTED_SHA: ${{ inputs.git-sha }}
+      run: |
+        docker run -d --name shoplite-smoke -p 8000:8000 "$IMAGE"
+        for attempt in $(seq 1 30); do
+          curl -fsS http://localhost:8000/health && break
+          sleep 1
+        done
+        echo
+        curl -fsS http://localhost:8000/version | tee version.json
+        echo
+        grep -q "\"git_sha\":\"$EXPECTED_SHA\"" version.json
+        test "$(docker inspect --format '{{.Config.User}}' shoplite-smoke)" = "app"
+        echo "Image $IMAGE: $(docker image inspect --format '{{.Size}}' "$IMAGE" | numfmt --to=iec) uncompressed" | tee -a "$GITHUB_STEP_SUMMARY"
+
+    - name: Container logs on failure
+      if: failure()
+      shell: bash
+      run: docker logs shoplite-smoke || true

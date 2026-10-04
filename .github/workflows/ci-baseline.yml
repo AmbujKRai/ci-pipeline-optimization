@@ -1,0 +1,60 @@
+# Baseline CI: the "before" pipeline used as the control in the experiments.
+#
+# It does exactly the same work as the optimized pipeline (lint, security scan, the full
+# test suite with coverage, Docker build and container smoke test), but everything runs
+# one step after another in a single job, tests run serially and nothing is cached.
+# The manual trigger can switch caching on to measure the effect of caching alone.
+name: CI (Baseline)
+run-name: "Baseline CI · cache=${{ inputs.enable_cache || 'false' }} · ${{ github.ref_name }}"
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["docs/**", "**/*.md"]
+  workflow_dispatch:
+    inputs:
+      enable_cache:
+        description: Use the virtualenv and Docker layer caches
+        type: choice
+        options: ["false", "true"]
+        default: "false"
+
+concurrency:
+  group: ci-baseline-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  USE_CACHE: ${{ inputs.enable_cache || 'false' }}
+
+jobs:
+  pipeline:
+    name: Sequential pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python environment
+        uses: ./.github/actions/python-env
+        with:
+          use-cache: ${{ env.USE_CACHE }}
+      - name: Lint (ruff)
+        run: ruff check . && ruff format --check .
+      - name: Security scan (bandit)
+        run: bandit -r app -q
+      - name: Run all tests (serial)
+        run: >-
+          pytest -p no:xdist -p no:cacheprovider
+          --cov=app --cov-report=term --cov-fail-under=85
+          --junitxml=reports/junit-serial.xml
+      - name: Summarise test results
+        if: ${{ !cancelled() }}
+        run: python scripts/junit_summary.py reports/junit-serial.xml >> "$GITHUB_STEP_SUMMARY"
+      - name: Build and smoke-test image
+        uses: ./.github/actions/docker-image
+        with:
+          use-cache: ${{ env.USE_CACHE }}
+          git-sha: ${{ github.sha }}
+          tags: shoplite:ci

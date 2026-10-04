@@ -1,0 +1,166 @@
+# Optimized CI: the pipeline used for every push and pull request.
+#
+#   static checks ─┐
+#   test shard 1..N ├─ all start at once ──► test report (merged coverage, 85 % gate)
+#   docker build  ──┘                    └─► image pushed to GHCR (main only)
+#
+# Optimizations: parallel jobs, duration-balanced test shards (pytest-split), parallel
+# workers inside each shard (pytest-xdist), a cached virtualenv and the Docker layer cache.
+# The manual trigger can switch caching off or change the shard count for experiments.
+name: CI (Optimized)
+run-name: >-
+  Optimized CI · cache=${{ inputs.enable_cache || 'true' }} · shards=${{ inputs.shards || '4' }}
+  · ${{ github.event_name == 'pull_request' && format('PR #{0}', github.event.number) || github.ref_name }}
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["docs/**", "**/*.md"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      enable_cache:
+        description: Use the virtualenv and Docker layer caches
+        type: choice
+        options: ["true", "false"]
+        default: "true"
+      shards:
+        description: Number of parallel test shards
+        type: choice
+        options: ["1", "2", "4", "6", "8"]
+        default: "4"
+
+concurrency:
+  group: ci-optimized-${{ github.event_name }}-${{ github.ref }}
+  # Superseded pull-request runs are cancelled; main and experiment runs always finish.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  USE_CACHE: ${{ inputs.enable_cache || 'true' }}
+  SHARDS: ${{ inputs.shards || '4' }}
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python environment
+        uses: ./.github/actions/python-env
+        with:
+          use-cache: ${{ env.USE_CACHE }}
+      - name: Lint (ruff)
+        run: ruff check . && ruff format --check .
+      - name: Security scan (bandit)
+        run: bandit -r app -q
+
+  tests:
+    name: Tests (shard ${{ matrix.group }}/${{ inputs.shards || '4' }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: true
+      matrix:
+        group: ${{ fromJSON('{"1":[1],"2":[1,2],"4":[1,2,3,4],"6":[1,2,3,4,5,6],"8":[1,2,3,4,5,6,7,8]}')[inputs.shards || '4'] }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python environment
+        uses: ./.github/actions/python-env
+        with:
+          use-cache: ${{ env.USE_CACHE }}
+      - name: Run test shard
+        env:
+          COVERAGE_FILE: .coverage.shard-${{ matrix.group }}
+        run: >-
+          pytest -n auto --dist worksteal -p no:cacheprovider
+          --splits "$SHARDS" --group ${{ matrix.group }} --splitting-algorithm least_duration
+          --cov=app --cov-report=
+          --junitxml=reports/junit-shard-${{ matrix.group }}.xml
+      - name: Upload shard results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-shard-${{ matrix.group }}
+          path: |
+            reports/
+            .coverage.shard-*
+          include-hidden-files: true
+          retention-days: 7
+
+  test-report:
+    name: Test report
+    needs: tests
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python environment
+        uses: ./.github/actions/python-env
+        with:
+          use-cache: ${{ env.USE_CACHE }}
+      - name: Download shard results
+        uses: actions/download-artifact@v8
+        with:
+          pattern: test-results-shard-*
+          merge-multiple: true
+      - name: Summarise test results
+        run: python scripts/junit_summary.py reports/junit-shard-*.xml >> "$GITHUB_STEP_SUMMARY"
+      - name: Combine coverage and enforce the 85 % gate
+        run: |
+          coverage combine .coverage.shard-*
+          coverage xml -o coverage.xml
+          coverage html -d htmlcov
+          { echo "## Coverage"; coverage report --format=markdown; } >> "$GITHUB_STEP_SUMMARY"
+          coverage report --fail-under=85
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-report
+          path: |
+            htmlcov/
+            coverage.xml
+          retention-days: 14
+      - name: Fail if a shard did not pass
+        if: needs.tests.result != 'success'
+        run: |
+          echo "::error::One or more test shards failed or were cancelled."
+          exit 1
+
+  docker:
+    name: Docker build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Image name
+        id: image
+        run: |
+          echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+          echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+      - name: Build and smoke-test image
+        uses: ./.github/actions/docker-image
+        with:
+          use-cache: ${{ env.USE_CACHE }}
+          git-sha: ${{ github.sha }}
+          tags: |
+            shoplite:ci
+            ${{ steps.image.outputs.name }}:${{ steps.image.outputs.tag }}
+      - name: Log in to GitHub Container Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push image (immutable sha tag)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: docker push "${{ steps.image.outputs.name }}:${{ steps.image.outputs.tag }}"

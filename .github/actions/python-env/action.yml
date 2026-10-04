@@ -1,0 +1,49 @@
+name: Set up Python environment
+description: >
+  Installs Python and a virtualenv with the pinned dependencies. With caching on, the whole
+  virtualenv is restored from the Actions cache (keyed by OS, exact Python version and a hash
+  of the requirements files), so `pip install` is skipped entirely on a cache hit.
+
+inputs:
+  python-version:
+    description: Python version to install
+    default: "3.12"
+  use-cache:
+    description: "'true' to restore and save the virtualenv cache, 'false' for a clean install"
+    default: "true"
+
+outputs:
+  cache-hit:
+    description: "'true' when the virtualenv came from the cache"
+    value: ${{ steps.venv-cache.outputs.cache-hit == 'true' }}
+
+runs:
+  using: composite
+  steps:
+    - name: Install Python
+      id: python
+      uses: actions/setup-python@v7
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Restore virtualenv from cache
+      id: venv-cache
+      if: inputs.use-cache == 'true'
+      uses: actions/cache@v6
+      with:
+        path: .venv
+        # Exact-match key only: a stale environment is never reused.
+        key: venv-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-${{ hashFiles('requirements.txt', 'requirements-dev.txt') }}
+
+    - name: Install dependencies
+      if: steps.venv-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        python -m venv .venv
+        .venv/bin/python -m pip install --disable-pip-version-check --no-cache-dir -r requirements-dev.txt
+
+    - name: Put the virtualenv on PATH
+      shell: bash
+      run: |
+        echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
+        echo "VIRTUAL_ENV=$GITHUB_WORKSPACE/.venv" >> "$GITHUB_ENV"

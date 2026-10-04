@@ -76,10 +76,12 @@ jobs:
       - name: Run test shard
         env:
           COVERAGE_FILE: .coverage.shard-${{ matrix.group }}
+        # A single shard only covers part of the code, so the 85 % gate is applied to the
+        # merged coverage in the "Test report" job instead (--cov-fail-under=0 here).
         run: >-
           pytest -n auto --dist worksteal -p no:cacheprovider
           --splits "$SHARDS" --group ${{ matrix.group }} --splitting-algorithm least_duration
-          --cov=app --cov-report=
+          --cov=app --cov-report= --cov-fail-under=0
           --junitxml=reports/junit-shard-${{ matrix.group }}.xml
       - name: Upload shard results
         if: ${{ !cancelled() }}

@@ -4,7 +4,9 @@
   "name": "ShopLite CI optimisation",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:4": {}
+    // "moby": false installs Docker CE from docker.com; the Moby packages are not available
+    // for the Debian release (trixie) the Python image is based on.
+    "ghcr.io/devcontainers/features/docker-in-docker:4": { "moby": false }
   },
   "hostRequirements": {
     "cpus": 2,

@@ -1,0 +1,195 @@
+# Continuous delivery: runs after the optimized CI succeeds on main.
+#
+#   select image ──► staging (Kubernetes in kind) ──► production (Render) ──► promote :latest
+#
+# The image deployed is the exact one CI built and tested (immutable tag sha-<commit>).
+# Running this workflow by hand with an older tag rolls production back to that build.
+name: CD
+
+run-name: >-
+  CD · ${{ github.event_name == 'workflow_dispatch' && format('manual deploy of {0}', inputs.image_tag)
+  || format('sha-{0}', github.event.workflow_run.head_sha) }}
+
+on:
+  workflow_run:
+    workflows: ["CI (Optimized)"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: Image tag to deploy, e.g. sha-1a2b3c4 (an older tag rolls back)
+        required: true
+
+concurrency:
+  group: cd
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  select:
+    name: Select image
+    # Only deploy builds of main that passed CI (not experiment or pull-request runs).
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.pick.outputs.image }}
+      tag: ${{ steps.pick.outputs.tag }}
+      short-sha: ${{ steps.pick.outputs.short-sha }}
+    steps:
+      - name: Pick the image to deploy
+        id: pick
+        env:
+          REQUESTED_TAG: ${{ inputs.image_tag }}
+          BUILT_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          image="ghcr.io/${GITHUB_REPOSITORY,,}"
+          tag="${REQUESTED_TAG:-sha-${BUILT_SHA::7}}"
+          short=""
+          if [[ "$tag" == sha-* ]]; then short="${tag#sha-}"; fi
+          {
+            echo "image=$image"
+            echo "tag=$tag"
+            echo "short-sha=$short"
+          } >> "$GITHUB_OUTPUT"
+          echo "### Deploying \`$image:$tag\`" >> "$GITHUB_STEP_SUMMARY"
+
+  staging:
+    name: Staging (Kubernetes)
+    needs: select
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: staging
+    env:
+      IMAGE: ${{ needs.select.outputs.image }}:${{ needs.select.outputs.tag }}
+      SHORT_SHA: ${{ needs.select.outputs.short-sha }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull the image built by CI
+        run: |
+          docker pull "$IMAGE"
+          docker tag "$IMAGE" shoplite:ci
+      - name: Create a Kubernetes cluster (kind)
+        uses: helm/kind-action@v1
+        with:
+          cluster_name: shoplite-staging
+          wait: 120s
+      - name: Load the image into the cluster
+        run: kind load docker-image shoplite:ci --name shoplite-staging
+      - name: Deploy the manifests
+        run: |
+          kubectl apply -k k8s/
+          kubectl -n shoplite rollout status deployment/shoplite --timeout=180s
+          kubectl -n shoplite get pods -o wide
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Smoke-test staging
+        run: |
+          pip install --quiet --disable-pip-version-check pytest==9.1.1
+          kubectl -n shoplite port-forward service/shoplite 8080:80 > port-forward.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            curl -fsS http://localhost:8080/health && break
+            sleep 1
+          done
+          echo
+          SMOKE_BASE_URL=http://localhost:8080 SMOKE_EXPECTED_SHA="$SHORT_SHA" \
+            pytest -m smoke smoke -q -p no:cacheprovider
+      - name: Cluster diagnostics
+        if: failure()
+        run: |
+          kubectl -n shoplite get all || true
+          kubectl -n shoplite describe pods || true
+          kubectl -n shoplite logs deployment/shoplite --tail=100 || true
+
+  production:
+    name: Production (Render)
+    needs: [select, staging]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: ${{ vars.RENDER_SERVICE_URL }}
+    env:
+      DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      SERVICE_URL: ${{ vars.RENDER_SERVICE_URL }}
+      IMAGE: ${{ needs.select.outputs.image }}:${{ needs.select.outputs.tag }}
+      SHORT_SHA: ${{ needs.select.outputs.short-sha }}
+    steps:
+      - name: Check that production is configured
+        id: config
+        run: |
+          if [ -n "$DEPLOY_HOOK" ] && [ -n "$SERVICE_URL" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Production deploy skipped::Add the RENDER_DEPLOY_HOOK_URL secret and the RENDER_SERVICE_URL variable to deploy to Render."
+          fi
+      - name: Trigger a Render deploy of this exact image
+        if: steps.config.outputs.enabled == 'true'
+        run: |
+          encoded=$(python3 -c 'import os, urllib.parse; print(urllib.parse.quote(os.environ["IMAGE"], safe=""))')
+          status=$(curl -sS -o render.json -w '%{http_code}' -X POST "${DEPLOY_HOOK}&imgURL=${encoded}")
+          echo "Render answered HTTP $status"
+          cat render.json; echo
+          [ "$status" = "200" ] || [ "$status" = "202" ]
+      - name: Wait until the new build is live
+        if: steps.config.outputs.enabled == 'true'
+        run: |
+          # Free Render services sleep when idle and take about a minute to wake up.
+          for attempt in $(seq 1 60); do
+            live=$(curl -fsS --max-time 30 "$SERVICE_URL/version" \
+              | python3 -c 'import json, sys; print(json.load(sys.stdin)["git_sha"])' 2>/dev/null || true)
+            echo "check $attempt: live build ${live:-unreachable}"
+            if [ -n "$live" ] && [[ "$live" == "$SHORT_SHA"* ]]; then
+              echo "Production is serving $live" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::Render did not start serving $SHORT_SHA within 10 minutes"
+          exit 1
+      - uses: actions/checkout@v7
+        if: steps.config.outputs.enabled == 'true'
+      - uses: actions/setup-python@v7
+        if: steps.config.outputs.enabled == 'true'
+        with:
+          python-version: "3.12"
+      - name: Smoke-test production
+        if: steps.config.outputs.enabled == 'true'
+        run: |
+          pip install --quiet --disable-pip-version-check pytest==9.1.1
+          SMOKE_BASE_URL="$SERVICE_URL" SMOKE_EXPECTED_SHA="$SHORT_SHA" SMOKE_TIMEOUT=60 \
+            pytest -m smoke smoke -q -p no:cacheprovider
+
+  promote:
+    name: Promote to latest
+    needs: [select, production]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/setup-buildx-action@v4
+      - name: Point the latest tag at the deployed build
+        env:
+          IMAGE: ${{ needs.select.outputs.image }}
+          TAG: ${{ needs.select.outputs.tag }}
+        run: |
+          docker buildx imagetools create --tag "$IMAGE:latest" "$IMAGE:$TAG"
+          echo "\`$IMAGE:latest\` now points at \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"

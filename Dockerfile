@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-#
 # Production image for ShopLite, written to make the most of the Docker layer cache:
 #   1. dependencies are installed before the source code is copied, so a code-only
 #      change re-uses the (slow) dependency layer;

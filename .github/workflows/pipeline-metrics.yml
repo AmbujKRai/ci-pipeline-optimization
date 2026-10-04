@@ -1,0 +1,83 @@
+# Rebuilds the pipeline-performance dashboard on GitHub Pages after every CI run.
+#
+# Timings come from the GitHub REST API. Runs already measured are kept in the Actions
+# cache, so each update only fetches the new runs (a small use of caching in itself).
+name: Pipeline Metrics
+
+on:
+  workflow_run:
+    workflows: ["CI (Baseline)", "CI (Optimized)", "Docker Cache Benchmark"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pipeline-metrics
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build dashboard
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Restore measured runs
+        uses: actions/cache/restore@v6
+        with:
+          path: .metrics-cache
+          key: metrics-${{ github.run_id }}
+          restore-keys: metrics-
+      - name: Collect pipeline timings
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/collect_metrics.py --repo "$GITHUB_REPOSITORY" --cache .metrics-cache/runs.json --out site/data/metrics.json
+      - name: Save measured runs
+        uses: actions/cache/save@v6
+        with:
+          path: .metrics-cache
+          key: metrics-${{ github.run_id }}
+      - name: Fetch the latest Docker benchmark and coverage report
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          benchmark=$(gh run list -R "$GITHUB_REPOSITORY" --workflow "Docker Cache Benchmark" --status success --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+          if [ -n "$benchmark" ]; then gh run download "$benchmark" -R "$GITHUB_REPOSITORY" --name docker-benchmark --dir benchmark || true; fi
+          ci=$(gh run list -R "$GITHUB_REPOSITORY" --workflow "CI (Optimized)" --branch main --status success --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+          if [ -n "$ci" ]; then gh run download "$ci" -R "$GITHUB_REPOSITORY" --name coverage-report --dir coverage || true; fi
+      - name: Build the dashboard
+        env:
+          APP_URL: ${{ vars.RENDER_SERVICE_URL }}
+        run: >-
+          python scripts/build_dashboard.py
+          --metrics site/data/metrics.json
+          --local docs/results/local_parallelism.json
+          --docker benchmark/docker-benchmark.json
+          --coverage coverage
+          ${APP_URL:+--app-url "$APP_URL"}
+          --out site
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

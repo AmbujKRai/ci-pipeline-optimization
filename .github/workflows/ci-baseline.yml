@@ -5,7 +5,9 @@
 # one step after another in a single job, tests run serially and nothing is cached.
 # The manual trigger can switch caching on to measure the effect of caching alone.
 name: CI (Baseline)
-run-name: "Baseline CI · cache=${{ inputs.enable_cache || 'false' }} · ${{ github.ref_name }}"
+run-name: >-
+  Baseline CI · cache=${{ inputs.enable_cache || 'false' }} · ${{ github.ref_name }}
+  ${{ inputs.label && format('[{0}]', inputs.label) || '' }}
 
 on:
   push:
@@ -18,9 +20,13 @@ on:
         type: choice
         options: ["false", "true"]
         default: "false"
+      label:
+        description: Optional tag for experiment runs (shown in the run name)
+        type: string
+        default: ""
 
 concurrency:
-  group: ci-baseline-${{ github.ref }}
+  group: ci-baseline-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:

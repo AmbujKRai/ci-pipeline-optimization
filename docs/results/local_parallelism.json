@@ -1,0 +1,59 @@
+{
+  "experiment": "E3 local parallelism",
+  "recorded_at": "2026-10-04T16:43:05+00:00",
+  "machine": {
+    "os": "Windows-10-10.0.19045-SP0",
+    "python": "3.12.10",
+    "logical_cpus": 8
+  },
+  "results": [
+    {
+      "workers": 0,
+      "label": "serial",
+      "runs": [
+        99.21,
+        94.13,
+        101.23
+      ],
+      "median": 99.21,
+      "speedup": 1.0,
+      "efficiency": 1.0
+    },
+    {
+      "workers": 2,
+      "label": "2 workers",
+      "runs": [
+        58.22,
+        57.43,
+        49.61
+      ],
+      "median": 57.43,
+      "speedup": 1.73,
+      "efficiency": 0.86
+    },
+    {
+      "workers": 4,
+      "label": "4 workers",
+      "runs": [
+        32.93,
+        32.11,
+        34.75
+      ],
+      "median": 32.93,
+      "speedup": 3.01,
+      "efficiency": 0.75
+    },
+    {
+      "workers": 8,
+      "label": "8 workers",
+      "runs": [
+        27.94,
+        34.1,
+        28.41
+      ],
+      "median": 28.41,
+      "speedup": 3.49,
+      "efficiency": 0.44
+    }
+  ]
+}

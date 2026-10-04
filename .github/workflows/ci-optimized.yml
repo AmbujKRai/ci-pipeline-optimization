@@ -11,6 +11,7 @@ name: CI (Optimized)
 run-name: >-
   Optimized CI · cache=${{ inputs.enable_cache || 'true' }} · shards=${{ inputs.shards || '4' }}
   · ${{ github.event_name == 'pull_request' && format('PR #{0}', github.event.number) || github.ref_name }}
+  ${{ inputs.label && format('[{0}]', inputs.label) || '' }}
 
 on:
   push:
@@ -30,6 +31,10 @@ on:
         type: choice
         options: ["1", "2", "4", "6", "8"]
         default: "4"
+      label:
+        description: Optional tag for experiment runs (shown in the run name)
+        type: string
+        default: ""
 
 concurrency:
   group: ci-optimized-${{ github.event_name }}-${{ github.ref }}

@@ -110,7 +110,8 @@ def main() -> int:
 
     plan = E1 if args.experiment == "e1" else E2
     # One warm-up run fills the virtualenv and Docker caches; it is excluded from results.
-    run_one(args.experiment, "ci-optimized.yml", {"enable_cache": "true"}, f"{args.experiment}-warmup")
+    warmup = f"{args.experiment}-warmup"
+    run_one(args.experiment, "ci-optimized.yml", {"enable_cache": "true"}, warmup)
     for repeat in range(1, args.repeats + 1):
         for workflow, inputs in plan:
             run_one(args.experiment, workflow, inputs, f"{args.experiment}-r{repeat}")

@@ -1,0 +1,69 @@
+{
+  "experiment": "E4 Docker build caching",
+  "recorded_at": "2026-10-04T16:57:41+00:00",
+  "repeats": 3,
+  "runs": {
+    "naive": [
+      {
+        "cold": 6.49,
+        "no_change": 0.09,
+        "code_change": 6.02,
+        "dependency_change": 6.02,
+        "size_bytes": 1173291318
+      },
+      {
+        "cold": 6.23,
+        "no_change": 0.1,
+        "code_change": 5.96,
+        "dependency_change": 6.23,
+        "size_bytes": 1173291320
+      },
+      {
+        "cold": 6.08,
+        "no_change": 0.09,
+        "code_change": 5.88,
+        "dependency_change": 6.11,
+        "size_bytes": 1173291320
+      }
+    ],
+    "optimized": [
+      {
+        "cold": 8.04,
+        "no_change": 0.15,
+        "code_change": 0.78,
+        "dependency_change": 5.0,
+        "size_bytes": 184325504
+      },
+      {
+        "cold": 7.88,
+        "no_change": 0.09,
+        "code_change": 0.9,
+        "dependency_change": 5.01,
+        "size_bytes": 184325504
+      },
+      {
+        "cold": 7.62,
+        "no_change": 0.1,
+        "code_change": 0.62,
+        "dependency_change": 5.0,
+        "size_bytes": 184325504
+      }
+    ]
+  },
+  "median": {
+    "naive": {
+      "cold": 6.23,
+      "no_change": 0.09,
+      "code_change": 5.96,
+      "dependency_change": 6.11,
+      "size_bytes": 1173291320
+    },
+    "optimized": {
+      "cold": 7.88,
+      "no_change": 0.1,
+      "code_change": 0.78,
+      "dependency_change": 5.0,
+      "size_bytes": 184325504
+    }
+  }
+}

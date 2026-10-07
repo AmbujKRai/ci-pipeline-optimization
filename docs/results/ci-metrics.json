@@ -1,0 +1,1734 @@
+{
+  "repository": "AmbujKRai/ci-pipeline-optimization",
+  "generated_at": "2026-10-07T17:45:30+00:00",
+  "runs": [
+    {
+      "id": 37217478661,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main",
+      "event": "push",
+      "branch": "main",
+      "sha": "58eb32a",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37217478661",
+      "created_at": "2026-10-04T16:37:55Z",
+      "cache": false,
+      "shards": 0,
+      "label": null,
+      "config": "baseline|cache=off",
+      "wall_seconds": 182.0,
+      "queue_and_wall_seconds": 185.0,
+      "runner_seconds": 182.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 14.0,
+        "static": 1.0,
+        "tests": 136.0,
+        "docker": 25.0
+      },
+      "stages_summed": {
+        "setup": 14.0,
+        "static": 1.0,
+        "tests": 136.0,
+        "docker": 25.0
+      }
+    },
+    {
+      "id": 37217589430,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main",
+      "event": "push",
+      "branch": "main",
+      "sha": "617e9f5",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37217589430",
+      "created_at": "2026-10-04T16:39:45Z",
+      "cache": false,
+      "shards": 0,
+      "label": null,
+      "config": "baseline|cache=off",
+      "wall_seconds": 139.0,
+      "queue_and_wall_seconds": 217.0,
+      "runner_seconds": 139.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 9.0,
+        "static": 0.0,
+        "tests": 102.0,
+        "docker": 22.0
+      },
+      "stages_summed": {
+        "setup": 9.0,
+        "static": 0.0,
+        "tests": 102.0,
+        "docker": 22.0
+      }
+    },
+    {
+      "id": 37217589449,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main",
+      "event": "push",
+      "branch": "main",
+      "sha": "617e9f5",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37217589449",
+      "created_at": "2026-10-04T16:39:45Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 41.0,
+      "queue_and_wall_seconds": 44.0,
+      "runner_seconds": 141.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 22.0,
+        "docker": 13.0
+      },
+      "stages_summed": {
+        "setup": 12.0,
+        "static": 1.0,
+        "tests": 71.0,
+        "docker": 13.0
+      }
+    },
+    {
+      "id": 37217729925,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 PR #1",
+      "event": "pull_request",
+      "branch": "feature/continuous-delivery",
+      "sha": "2b12f52",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37217729925",
+      "created_at": "2026-10-04T16:42:00Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 41.0,
+      "queue_and_wall_seconds": 43.0,
+      "runner_seconds": 163.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 0.0,
+        "tests": 22.0,
+        "docker": 24.0
+      },
+      "stages_summed": {
+        "setup": 14.0,
+        "static": 0.0,
+        "tests": 82.0,
+        "docker": 24.0
+      }
+    },
+    {
+      "id": 37217831243,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main",
+      "event": "push",
+      "branch": "main",
+      "sha": "5616225",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37217831243",
+      "created_at": "2026-10-04T16:43:38Z",
+      "cache": false,
+      "shards": 0,
+      "label": null,
+      "config": "baseline|cache=off",
+      "wall_seconds": 181.0,
+      "queue_and_wall_seconds": 184.0,
+      "runner_seconds": 181.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 12.0,
+        "static": 1.0,
+        "tests": 140.0,
+        "docker": 23.0
+      },
+      "stages_summed": {
+        "setup": 12.0,
+        "static": 1.0,
+        "tests": 140.0,
+        "docker": 23.0
+      }
+    },
+    {
+      "id": 37217831254,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main",
+      "event": "push",
+      "branch": "main",
+      "sha": "5616225",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37217831254",
+      "created_at": "2026-10-04T16:43:38Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 47.0,
+      "queue_and_wall_seconds": 49.0,
+      "runner_seconds": 159.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 20.0,
+        "docker": 20.0
+      },
+      "stages_summed": {
+        "setup": 13.0,
+        "static": 1.0,
+        "tests": 72.0,
+        "docker": 20.0
+      }
+    },
+    {
+      "id": 37218394961,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 PR #2 ",
+      "event": "pull_request",
+      "branch": "feature/pipeline-metrics",
+      "sha": "f7b3793",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37218394961",
+      "created_at": "2026-10-04T16:52:54Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 77.0,
+      "queue_and_wall_seconds": 80.0,
+      "runner_seconds": 151.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 4.0,
+        "static": 0.0,
+        "tests": 20.0,
+        "docker": 21.0
+      },
+      "stages_summed": {
+        "setup": 16.0,
+        "static": 0.0,
+        "tests": 66.0,
+        "docker": 21.0
+      }
+    },
+    {
+      "id": 37218513884,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main ",
+      "event": "push",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37218513884",
+      "created_at": "2026-10-04T16:54:49Z",
+      "cache": false,
+      "shards": 0,
+      "label": null,
+      "config": "baseline|cache=off",
+      "wall_seconds": 184.0,
+      "queue_and_wall_seconds": 222.0,
+      "runner_seconds": 184.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 13.0,
+        "static": 0.0,
+        "tests": 140.0,
+        "docker": 25.0
+      },
+      "stages_summed": {
+        "setup": 13.0,
+        "static": 0.0,
+        "tests": 140.0,
+        "docker": 25.0
+      }
+    },
+    {
+      "id": 37218513811,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main ",
+      "event": "push",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37218513811",
+      "created_at": "2026-10-04T16:54:49Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 46.0,
+      "queue_and_wall_seconds": 48.0,
+      "runner_seconds": 147.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 0,
+        "tests": 20.0,
+        "docker": 22.0
+      },
+      "stages_summed": {
+        "setup": 13.0,
+        "static": 0.0,
+        "tests": 62.0,
+        "docker": 22.0
+      }
+    },
+    {
+      "id": 37218533300,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e1-warmup]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37218533300",
+      "created_at": "2026-10-04T16:55:06Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e1-warmup",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 47.0,
+      "queue_and_wall_seconds": 51.0,
+      "runner_seconds": 158.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 4.0,
+        "static": 1.0,
+        "tests": 21.0,
+        "docker": 21.0
+      },
+      "stages_summed": {
+        "setup": 14.0,
+        "static": 1.0,
+        "tests": 77.0,
+        "docker": 21.0
+      }
+    },
+    {
+      "id": 37218556614,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 PR #3 ",
+      "event": "pull_request",
+      "branch": "feature/jenkins",
+      "sha": "6a2745a",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37218556614",
+      "created_at": "2026-10-04T16:55:29Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 47.0,
+      "queue_and_wall_seconds": 49.0,
+      "runner_seconds": 170.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 4.0,
+        "static": 1.0,
+        "tests": 21.0,
+        "docker": 22.0
+      },
+      "stages_summed": {
+        "setup": 20.0,
+        "static": 1.0,
+        "tests": 76.0,
+        "docker": 22.0
+      }
+    },
+    {
+      "id": 37218594702,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main [e1-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37218594702",
+      "created_at": "2026-10-04T16:56:05Z",
+      "cache": false,
+      "shards": 0,
+      "label": "e1-r1",
+      "config": "baseline|cache=off",
+      "wall_seconds": 144.0,
+      "queue_and_wall_seconds": 149.0,
+      "runner_seconds": 144.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 8.0,
+        "static": 0.0,
+        "tests": 105.0,
+        "docker": 23.0
+      },
+      "stages_summed": {
+        "setup": 8.0,
+        "static": 0.0,
+        "tests": 105.0,
+        "docker": 23.0
+      }
+    },
+    {
+      "id": 37218761526,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=true \u00b7 main [e1-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37218761526",
+      "created_at": "2026-10-04T16:58:48Z",
+      "cache": true,
+      "shards": 0,
+      "label": "e1-r1",
+      "config": "baseline|cache=on",
+      "wall_seconds": 169.0,
+      "queue_and_wall_seconds": 173.0,
+      "runner_seconds": 169.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 139.0,
+        "docker": 19.0
+      },
+      "stages_summed": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 139.0,
+        "docker": 19.0
+      }
+    },
+    {
+      "id": 37218963180,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=false \u00b7 shards=4 \u00b7 main [e1-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37218963180",
+      "created_at": "2026-10-04T17:01:52Z",
+      "cache": false,
+      "shards": 4,
+      "label": "e1-r1",
+      "config": "optimized|cache=off|shards=4",
+      "wall_seconds": 67.0,
+      "queue_and_wall_seconds": 70.0,
+      "runner_seconds": 208.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 13.0,
+        "static": 1.0,
+        "tests": 20.0,
+        "docker": 24.0
+      },
+      "stages_summed": {
+        "setup": 72.0,
+        "static": 1.0,
+        "tests": 71.0,
+        "docker": 24.0
+      }
+    },
+    {
+      "id": 37219048924,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e1-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219048924",
+      "created_at": "2026-10-04T17:03:13Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e1-r1",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 50.0,
+      "queue_and_wall_seconds": 53.0,
+      "runner_seconds": 146.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 21.0,
+        "docker": 15.0
+      },
+      "stages_summed": {
+        "setup": 12.0,
+        "static": 1.0,
+        "tests": 75.0,
+        "docker": 15.0
+      }
+    },
+    {
+      "id": 37219132129,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main [e1-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219132129",
+      "created_at": "2026-10-04T17:04:32Z",
+      "cache": false,
+      "shards": 0,
+      "label": "e1-r2",
+      "config": "baseline|cache=off",
+      "wall_seconds": 134.0,
+      "queue_and_wall_seconds": 138.0,
+      "runner_seconds": 134.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 9.0,
+        "static": 1.0,
+        "tests": 98.0,
+        "docker": 20.0
+      },
+      "stages_summed": {
+        "setup": 9.0,
+        "static": 1.0,
+        "tests": 98.0,
+        "docker": 20.0
+      }
+    },
+    {
+      "id": 37219301349,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=true \u00b7 main [e1-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "de615a3",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219301349",
+      "created_at": "2026-10-04T17:07:14Z",
+      "cache": true,
+      "shards": 0,
+      "label": "e1-r2",
+      "config": "baseline|cache=on",
+      "wall_seconds": 161.0,
+      "queue_and_wall_seconds": 164.0,
+      "runner_seconds": 161.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 1.0,
+        "static": 1.0,
+        "tests": 141.0,
+        "docker": 13.0
+      },
+      "stages_summed": {
+        "setup": 1.0,
+        "static": 1.0,
+        "tests": 141.0,
+        "docker": 13.0
+      }
+    },
+    {
+      "id": 37219313779,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main ",
+      "event": "push",
+      "branch": "main",
+      "sha": "5db9875",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219313779",
+      "created_at": "2026-10-04T17:07:26Z",
+      "cache": false,
+      "shards": 0,
+      "label": null,
+      "config": "baseline|cache=off",
+      "wall_seconds": 147.0,
+      "queue_and_wall_seconds": 150.0,
+      "runner_seconds": 147.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 13.0,
+        "static": 0.0,
+        "tests": 104.0,
+        "docker": 22.0
+      },
+      "stages_summed": {
+        "setup": 13.0,
+        "static": 0.0,
+        "tests": 104.0,
+        "docker": 22.0
+      }
+    },
+    {
+      "id": 37219313759,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main ",
+      "event": "push",
+      "branch": "main",
+      "sha": "5db9875",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219313759",
+      "created_at": "2026-10-04T17:07:26Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 49.0,
+      "queue_and_wall_seconds": 52.0,
+      "runner_seconds": 168.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 0.0,
+        "tests": 23.0,
+        "docker": 23.0
+      },
+      "stages_summed": {
+        "setup": 14.0,
+        "static": 0.0,
+        "tests": 80.0,
+        "docker": 23.0
+      }
+    },
+    {
+      "id": 37219319182,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 PR #4 ",
+      "event": "pull_request",
+      "branch": "fix/devcontainer-docker",
+      "sha": "4bd0c45",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219319182",
+      "created_at": "2026-10-04T17:07:32Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 47.0,
+      "queue_and_wall_seconds": 49.0,
+      "runner_seconds": 163.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 24.0,
+        "docker": 18.0
+      },
+      "stages_summed": {
+        "setup": 16.0,
+        "static": 1.0,
+        "tests": 84.0,
+        "docker": 18.0
+      }
+    },
+    {
+      "id": 37219433153,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main ",
+      "event": "push",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219433153",
+      "created_at": "2026-10-04T17:09:28Z",
+      "cache": false,
+      "shards": 0,
+      "label": null,
+      "config": "baseline|cache=off",
+      "wall_seconds": 167.0,
+      "queue_and_wall_seconds": 197.0,
+      "runner_seconds": 167.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 12.0,
+        "static": 0.0,
+        "tests": 118.0,
+        "docker": 29.0
+      },
+      "stages_summed": {
+        "setup": 12.0,
+        "static": 0.0,
+        "tests": 118.0,
+        "docker": 29.0
+      }
+    },
+    {
+      "id": 37219433137,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main ",
+      "event": "push",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219433137",
+      "created_at": "2026-10-04T17:09:28Z",
+      "cache": true,
+      "shards": 4,
+      "label": null,
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 43.0,
+      "queue_and_wall_seconds": 45.0,
+      "runner_seconds": 155.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 4.0,
+        "static": 0.0,
+        "tests": 20.0,
+        "docker": 19.0
+      },
+      "stages_summed": {
+        "setup": 15.0,
+        "static": 0.0,
+        "tests": 69.0,
+        "docker": 19.0
+      }
+    },
+    {
+      "id": 37219486922,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=false \u00b7 shards=4 \u00b7 main [e1-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219486922",
+      "created_at": "2026-10-04T17:10:19Z",
+      "cache": false,
+      "shards": 4,
+      "label": "e1-r2",
+      "config": "optimized|cache=off|shards=4",
+      "wall_seconds": 60.0,
+      "queue_and_wall_seconds": 63.0,
+      "runner_seconds": 197.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 12.0,
+        "static": 1.0,
+        "tests": 21.0,
+        "docker": 27.0
+      },
+      "stages_summed": {
+        "setup": 61.0,
+        "static": 1.0,
+        "tests": 63.0,
+        "docker": 27.0
+      }
+    },
+    {
+      "id": 37219574797,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e1-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219574797",
+      "created_at": "2026-10-04T17:11:43Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e1-r2",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 39.0,
+      "queue_and_wall_seconds": 42.0,
+      "runner_seconds": 144.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 3.0,
+        "tests": 21.0,
+        "docker": 19.0
+      },
+      "stages_summed": {
+        "setup": 10.0,
+        "static": 3.0,
+        "tests": 70.0,
+        "docker": 19.0
+      }
+    },
+    {
+      "id": 37219636998,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main [e1-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219636998",
+      "created_at": "2026-10-04T17:12:41Z",
+      "cache": false,
+      "shards": 0,
+      "label": "e1-r3",
+      "config": "baseline|cache=off",
+      "wall_seconds": 143.0,
+      "queue_and_wall_seconds": 146.0,
+      "runner_seconds": 143.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 9.0,
+        "static": 0.0,
+        "tests": 103.0,
+        "docker": 23.0
+      },
+      "stages_summed": {
+        "setup": 9.0,
+        "static": 0.0,
+        "tests": 103.0,
+        "docker": 23.0
+      }
+    },
+    {
+      "id": 37219815521,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=true \u00b7 main [e1-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37219815521",
+      "created_at": "2026-10-04T17:15:24Z",
+      "cache": true,
+      "shards": 0,
+      "label": "e1-r3",
+      "config": "baseline|cache=on",
+      "wall_seconds": 167.0,
+      "queue_and_wall_seconds": 172.0,
+      "runner_seconds": 167.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 134.0,
+        "docker": 22.0
+      },
+      "stages_summed": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 134.0,
+        "docker": 22.0
+      }
+    },
+    {
+      "id": 37220006402,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=false \u00b7 shards=4 \u00b7 main [e1-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37220006402",
+      "created_at": "2026-10-04T17:18:29Z",
+      "cache": false,
+      "shards": 4,
+      "label": "e1-r3",
+      "config": "optimized|cache=off|shards=4",
+      "wall_seconds": 62.0,
+      "queue_and_wall_seconds": 65.0,
+      "runner_seconds": 216.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 13.0,
+        "static": 1.0,
+        "tests": 21.0,
+        "docker": 23.0
+      },
+      "stages_summed": {
+        "setup": 74.0,
+        "static": 1.0,
+        "tests": 76.0,
+        "docker": 23.0
+      }
+    },
+    {
+      "id": 37220099012,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e1-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37220099012",
+      "created_at": "2026-10-04T17:19:58Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e1-r3",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 38.0,
+      "queue_and_wall_seconds": 42.0,
+      "runner_seconds": 145.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 2.0,
+        "static": 1.0,
+        "tests": 22.0,
+        "docker": 27.0
+      },
+      "stages_summed": {
+        "setup": 11.0,
+        "static": 1.0,
+        "tests": 67.0,
+        "docker": 27.0
+      }
+    },
+    {
+      "id": 37220167205,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main [e1-r4]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37220167205",
+      "created_at": "2026-10-04T17:20:57Z",
+      "cache": false,
+      "shards": 0,
+      "label": "e1-r4",
+      "config": "baseline|cache=off",
+      "wall_seconds": 175.0,
+      "queue_and_wall_seconds": 179.0,
+      "runner_seconds": 175.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 11.0,
+        "static": 0.0,
+        "tests": 133.0,
+        "docker": 24.0
+      },
+      "stages_summed": {
+        "setup": 11.0,
+        "static": 0.0,
+        "tests": 133.0,
+        "docker": 24.0
+      }
+    },
+    {
+      "id": 37220385010,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=true \u00b7 main [e1-r4]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37220385010",
+      "created_at": "2026-10-04T17:24:22Z",
+      "cache": true,
+      "shards": 0,
+      "label": "e1-r4",
+      "config": "baseline|cache=on",
+      "wall_seconds": 155.0,
+      "queue_and_wall_seconds": 158.0,
+      "runner_seconds": 155.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 1.0,
+        "static": 1.0,
+        "tests": 135.0,
+        "docker": 13.0
+      },
+      "stages_summed": {
+        "setup": 1.0,
+        "static": 1.0,
+        "tests": 135.0,
+        "docker": 13.0
+      }
+    },
+    {
+      "id": 37220576166,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=false \u00b7 shards=4 \u00b7 main [e1-r4]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37220576166",
+      "created_at": "2026-10-04T17:27:25Z",
+      "cache": false,
+      "shards": 4,
+      "label": "e1-r4",
+      "config": "optimized|cache=off|shards=4",
+      "wall_seconds": 60.0,
+      "queue_and_wall_seconds": 64.0,
+      "runner_seconds": 195.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 13.0,
+        "static": 0,
+        "tests": 20.0,
+        "docker": 29.0
+      },
+      "stages_summed": {
+        "setup": 64.0,
+        "static": 0.0,
+        "tests": 65.0,
+        "docker": 29.0
+      }
+    },
+    {
+      "id": 37220659721,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e1-r4]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37220659721",
+      "created_at": "2026-10-04T17:28:47Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e1-r4",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 45.0,
+      "queue_and_wall_seconds": 48.0,
+      "runner_seconds": 151.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 23.0,
+        "docker": 16.0
+      },
+      "stages_summed": {
+        "setup": 12.0,
+        "static": 1.0,
+        "tests": 82.0,
+        "docker": 16.0
+      }
+    },
+    {
+      "id": 37220720858,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=false \u00b7 main [e1-r5]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37220720858",
+      "created_at": "2026-10-04T17:29:45Z",
+      "cache": false,
+      "shards": 0,
+      "label": "e1-r5",
+      "config": "baseline|cache=off",
+      "wall_seconds": 181.0,
+      "queue_and_wall_seconds": 184.0,
+      "runner_seconds": 181.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 11.0,
+        "static": 1.0,
+        "tests": 135.0,
+        "docker": 27.0
+      },
+      "stages_summed": {
+        "setup": 11.0,
+        "static": 1.0,
+        "tests": 135.0,
+        "docker": 27.0
+      }
+    },
+    {
+      "id": 37220942861,
+      "pipeline": "baseline",
+      "title": "Baseline CI \u00b7 cache=true \u00b7 main [e1-r5]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37220942861",
+      "created_at": "2026-10-04T17:33:10Z",
+      "cache": true,
+      "shards": 0,
+      "label": "e1-r5",
+      "config": "baseline|cache=on",
+      "wall_seconds": 141.0,
+      "queue_and_wall_seconds": 144.0,
+      "runner_seconds": 141.0,
+      "jobs": 1,
+      "stages": {
+        "setup": 2.0,
+        "static": 1.0,
+        "tests": 111.0,
+        "docker": 20.0
+      },
+      "stages_summed": {
+        "setup": 2.0,
+        "static": 1.0,
+        "tests": 111.0,
+        "docker": 20.0
+      }
+    },
+    {
+      "id": 37221119139,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=false \u00b7 shards=4 \u00b7 main [e1-r5]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221119139",
+      "created_at": "2026-10-04T17:35:51Z",
+      "cache": false,
+      "shards": 4,
+      "label": "e1-r5",
+      "config": "optimized|cache=off|shards=4",
+      "wall_seconds": 71.0,
+      "queue_and_wall_seconds": 74.0,
+      "runner_seconds": 203.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 15.0,
+        "static": 1.0,
+        "tests": 21.0,
+        "docker": 26.0
+      },
+      "stages_summed": {
+        "setup": 63.0,
+        "static": 1.0,
+        "tests": 62.0,
+        "docker": 26.0
+      }
+    },
+    {
+      "id": 37221202075,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e1-r5]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221202075",
+      "created_at": "2026-10-04T17:37:11Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e1-r5",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 40.0,
+      "queue_and_wall_seconds": 44.0,
+      "runner_seconds": 148.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 0,
+        "tests": 21.0,
+        "docker": 22.0
+      },
+      "stages_summed": {
+        "setup": 13.0,
+        "static": 0.0,
+        "tests": 70.0,
+        "docker": 22.0
+      }
+    },
+    {
+      "id": 37221261967,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e2-warmup]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221261967",
+      "created_at": "2026-10-04T17:38:09Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e2-warmup",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 43.0,
+      "queue_and_wall_seconds": 46.0,
+      "runner_seconds": 139.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 4.0,
+        "static": 0,
+        "tests": 20.0,
+        "docker": 15.0
+      },
+      "stages_summed": {
+        "setup": 16.0,
+        "static": 0.0,
+        "tests": 65.0,
+        "docker": 15.0
+      }
+    },
+    {
+      "id": 37221320938,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=1 \u00b7 main [e2-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221320938",
+      "created_at": "2026-10-04T17:39:07Z",
+      "cache": true,
+      "shards": 1,
+      "label": "e2-r1",
+      "config": "optimized|cache=on|shards=1",
+      "wall_seconds": 60.0,
+      "queue_and_wall_seconds": 63.0,
+      "runner_seconds": 81.0,
+      "jobs": 4,
+      "stages": {
+        "setup": 3.0,
+        "static": 0,
+        "tests": 35.0,
+        "docker": 13.0
+      },
+      "stages_summed": {
+        "setup": 8.0,
+        "static": 0.0,
+        "tests": 35.0,
+        "docker": 13.0
+      }
+    },
+    {
+      "id": 37221402386,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=2 \u00b7 main [e2-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221402386",
+      "created_at": "2026-10-04T17:40:25Z",
+      "cache": true,
+      "shards": 2,
+      "label": "e2-r1",
+      "config": "optimized|cache=on|shards=2",
+      "wall_seconds": 54.0,
+      "queue_and_wall_seconds": 57.0,
+      "runner_seconds": 108.0,
+      "jobs": 5,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 29.0,
+        "docker": 13.0
+      },
+      "stages_summed": {
+        "setup": 9.0,
+        "static": 1.0,
+        "tests": 55.0,
+        "docker": 13.0
+      }
+    },
+    {
+      "id": 37221487075,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e2-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221487075",
+      "created_at": "2026-10-04T17:41:44Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e2-r1",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 44.0,
+      "queue_and_wall_seconds": 47.0,
+      "runner_seconds": 158.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 0,
+        "tests": 21.0,
+        "docker": 18.0
+      },
+      "stages_summed": {
+        "setup": 16.0,
+        "static": 0.0,
+        "tests": 79.0,
+        "docker": 18.0
+      }
+    },
+    {
+      "id": 37221550641,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=6 \u00b7 main [e2-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221550641",
+      "created_at": "2026-10-04T17:42:44Z",
+      "cache": true,
+      "shards": 6,
+      "label": "e2-r1",
+      "config": "optimized|cache=on|shards=6",
+      "wall_seconds": 39.0,
+      "queue_and_wall_seconds": 43.0,
+      "runner_seconds": 171.0,
+      "jobs": 9,
+      "stages": {
+        "setup": 3.0,
+        "static": 0.0,
+        "tests": 17.0,
+        "docker": 17.0
+      },
+      "stages_summed": {
+        "setup": 19.0,
+        "static": 0.0,
+        "tests": 81.0,
+        "docker": 17.0
+      }
+    },
+    {
+      "id": 37221612100,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=8 \u00b7 main [e2-r1]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221612100",
+      "created_at": "2026-10-04T17:43:43Z",
+      "cache": true,
+      "shards": 8,
+      "label": "e2-r1",
+      "config": "optimized|cache=on|shards=8",
+      "wall_seconds": 40.0,
+      "queue_and_wall_seconds": 44.0,
+      "runner_seconds": 193.0,
+      "jobs": 11,
+      "stages": {
+        "setup": 3.0,
+        "static": 0,
+        "tests": 16.0,
+        "docker": 16.0
+      },
+      "stages_summed": {
+        "setup": 24.0,
+        "static": 0.0,
+        "tests": 88.0,
+        "docker": 16.0
+      }
+    },
+    {
+      "id": 37221676487,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=1 \u00b7 main [e2-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221676487",
+      "created_at": "2026-10-04T17:44:44Z",
+      "cache": true,
+      "shards": 1,
+      "label": "e2-r2",
+      "config": "optimized|cache=on|shards=1",
+      "wall_seconds": 101.0,
+      "queue_and_wall_seconds": 108.0,
+      "runner_seconds": 96.0,
+      "jobs": 4,
+      "stages": {
+        "setup": 2.0,
+        "static": 0,
+        "tests": 49.0,
+        "docker": 19.0
+      },
+      "stages_summed": {
+        "setup": 6.0,
+        "static": 0.0,
+        "tests": 49.0,
+        "docker": 19.0
+      }
+    },
+    {
+      "id": 37221807580,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=2 \u00b7 main [e2-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221807580",
+      "created_at": "2026-10-04T17:46:45Z",
+      "cache": true,
+      "shards": 2,
+      "label": "e2-r2",
+      "config": "optimized|cache=on|shards=2",
+      "wall_seconds": 51.0,
+      "queue_and_wall_seconds": 55.0,
+      "runner_seconds": 132.0,
+      "jobs": 5,
+      "stages": {
+        "setup": 2.0,
+        "static": 1.0,
+        "tests": 31.0,
+        "docker": 32.0
+      },
+      "stages_summed": {
+        "setup": 7.0,
+        "static": 1.0,
+        "tests": 61.0,
+        "docker": 32.0
+      }
+    },
+    {
+      "id": 37221888048,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e2-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221888048",
+      "created_at": "2026-10-04T17:48:04Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e2-r2",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 42.0,
+      "queue_and_wall_seconds": 46.0,
+      "runner_seconds": 155.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 21.0,
+        "docker": 24.0
+      },
+      "stages_summed": {
+        "setup": 13.0,
+        "static": 1.0,
+        "tests": 68.0,
+        "docker": 24.0
+      }
+    },
+    {
+      "id": 37221951467,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=6 \u00b7 main [e2-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37221951467",
+      "created_at": "2026-10-04T17:49:06Z",
+      "cache": true,
+      "shards": 6,
+      "label": "e2-r2",
+      "config": "optimized|cache=on|shards=6",
+      "wall_seconds": 37.0,
+      "queue_and_wall_seconds": 40.0,
+      "runner_seconds": 182.0,
+      "jobs": 9,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 18.0,
+        "docker": 23.0
+      },
+      "stages_summed": {
+        "setup": 16.0,
+        "static": 1.0,
+        "tests": 89.0,
+        "docker": 23.0
+      }
+    },
+    {
+      "id": 37222009440,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=8 \u00b7 main [e2-r2]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37222009440",
+      "created_at": "2026-10-04T17:50:09Z",
+      "cache": true,
+      "shards": 8,
+      "label": "e2-r2",
+      "config": "optimized|cache=on|shards=8",
+      "wall_seconds": 43.0,
+      "queue_and_wall_seconds": 46.0,
+      "runner_seconds": 201.0,
+      "jobs": 11,
+      "stages": {
+        "setup": 3.0,
+        "static": 0.0,
+        "tests": 17.0,
+        "docker": 16.0
+      },
+      "stages_summed": {
+        "setup": 19.0,
+        "static": 0.0,
+        "tests": 100.0,
+        "docker": 16.0
+      }
+    },
+    {
+      "id": 37222077889,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=1 \u00b7 main [e2-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37222077889",
+      "created_at": "2026-10-04T17:51:10Z",
+      "cache": true,
+      "shards": 1,
+      "label": "e2-r3",
+      "config": "optimized|cache=on|shards=1",
+      "wall_seconds": 74.0,
+      "queue_and_wall_seconds": 77.0,
+      "runner_seconds": 98.0,
+      "jobs": 4,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 49.0,
+        "docker": 13.0
+      },
+      "stages_summed": {
+        "setup": 7.0,
+        "static": 1.0,
+        "tests": 49.0,
+        "docker": 13.0
+      }
+    },
+    {
+      "id": 37222194172,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=2 \u00b7 main [e2-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37222194172",
+      "created_at": "2026-10-04T17:52:48Z",
+      "cache": true,
+      "shards": 2,
+      "label": "e2-r3",
+      "config": "optimized|cache=on|shards=2",
+      "wall_seconds": 51.0,
+      "queue_and_wall_seconds": 55.0,
+      "runner_seconds": 115.0,
+      "jobs": 5,
+      "stages": {
+        "setup": 3.0,
+        "static": 0,
+        "tests": 31.0,
+        "docker": 20.0
+      },
+      "stages_summed": {
+        "setup": 8.0,
+        "static": 0.0,
+        "tests": 54.0,
+        "docker": 20.0
+      }
+    },
+    {
+      "id": 37222276956,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e2-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37222276956",
+      "created_at": "2026-10-04T17:54:07Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e2-r3",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 74.0,
+      "queue_and_wall_seconds": 78.0,
+      "runner_seconds": 147.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 3.0,
+        "static": 0,
+        "tests": 20.0,
+        "docker": 22.0
+      },
+      "stages_summed": {
+        "setup": 14.0,
+        "static": 0.0,
+        "tests": 71.0,
+        "docker": 22.0
+      }
+    },
+    {
+      "id": 37661105982,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=4 \u00b7 main [e2-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37661105982",
+      "created_at": "2026-10-07T17:42:08Z",
+      "cache": true,
+      "shards": 4,
+      "label": "e2-r3",
+      "config": "optimized|cache=on|shards=4",
+      "wall_seconds": 55.0,
+      "queue_and_wall_seconds": 59.0,
+      "runner_seconds": 195.0,
+      "jobs": 7,
+      "stages": {
+        "setup": 12.0,
+        "static": 0.0,
+        "tests": 20.0,
+        "docker": 44.0
+      },
+      "stages_summed": {
+        "setup": 25.0,
+        "static": 0.0,
+        "tests": 74.0,
+        "docker": 44.0
+      }
+    },
+    {
+      "id": 37661281891,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=6 \u00b7 main [e2-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37661281891",
+      "created_at": "2026-10-07T17:43:30Z",
+      "cache": true,
+      "shards": 6,
+      "label": "e2-r3",
+      "config": "optimized|cache=on|shards=6",
+      "wall_seconds": 50.0,
+      "queue_and_wall_seconds": 54.0,
+      "runner_seconds": 218.0,
+      "jobs": 9,
+      "stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 20.0,
+        "docker": 17.0
+      },
+      "stages_summed": {
+        "setup": 20.0,
+        "static": 1.0,
+        "tests": 99.0,
+        "docker": 17.0
+      }
+    },
+    {
+      "id": 37661413620,
+      "pipeline": "optimized",
+      "title": "Optimized CI \u00b7 cache=true \u00b7 shards=8 \u00b7 main [e2-r3]",
+      "event": "workflow_dispatch",
+      "branch": "main",
+      "sha": "53e8bb2",
+      "url": "https://github.com/AmbujKRai/ci-pipeline-optimization/actions/runs/37661413620",
+      "created_at": "2026-10-07T17:44:34Z",
+      "cache": true,
+      "shards": 8,
+      "label": "e2-r3",
+      "config": "optimized|cache=on|shards=8",
+      "wall_seconds": 38.0,
+      "queue_and_wall_seconds": 42.0,
+      "runner_seconds": 218.0,
+      "jobs": 11,
+      "stages": {
+        "setup": 5.0,
+        "static": 1.0,
+        "tests": 17.0,
+        "docker": 18.0
+      },
+      "stages_summed": {
+        "setup": 21.0,
+        "static": 1.0,
+        "tests": 107.0,
+        "docker": 18.0
+      }
+    }
+  ],
+  "summary": {
+    "baseline|cache=off": {
+      "runs": 11,
+      "median_wall_seconds": 167.0,
+      "p25_wall_seconds": 143.5,
+      "p75_wall_seconds": 181.0,
+      "min_wall_seconds": 134.0,
+      "median_runner_seconds": 167.0,
+      "median_stages": {
+        "setup": 11.0,
+        "static": 0.0,
+        "tests": 118.0,
+        "docker": 23.0
+      },
+      "pipeline": "baseline",
+      "cache": false,
+      "shards": 0
+    },
+    "baseline|cache=on": {
+      "runs": 5,
+      "median_wall_seconds": 161.0,
+      "p25_wall_seconds": 155.0,
+      "p75_wall_seconds": 167.0,
+      "min_wall_seconds": 141.0,
+      "median_runner_seconds": 161.0,
+      "median_stages": {
+        "setup": 2.0,
+        "static": 1.0,
+        "tests": 135.0,
+        "docker": 19.0
+      },
+      "pipeline": "baseline",
+      "cache": true,
+      "shards": 0
+    },
+    "optimized|cache=off|shards=4": {
+      "runs": 5,
+      "median_wall_seconds": 62.0,
+      "p25_wall_seconds": 60.0,
+      "p75_wall_seconds": 67.0,
+      "min_wall_seconds": 60.0,
+      "median_runner_seconds": 203.0,
+      "median_stages": {
+        "setup": 13.0,
+        "static": 1.0,
+        "tests": 21.0,
+        "docker": 26.0
+      },
+      "pipeline": "optimized",
+      "cache": false,
+      "shards": 4
+    },
+    "optimized|cache=on|shards=1": {
+      "runs": 3,
+      "median_wall_seconds": 74.0,
+      "p25_wall_seconds": 67.0,
+      "p75_wall_seconds": 87.5,
+      "min_wall_seconds": 60.0,
+      "median_runner_seconds": 96.0,
+      "median_stages": {
+        "setup": 3.0,
+        "static": 0,
+        "tests": 49.0,
+        "docker": 13.0
+      },
+      "pipeline": "optimized",
+      "cache": true,
+      "shards": 1
+    },
+    "optimized|cache=on|shards=2": {
+      "runs": 3,
+      "median_wall_seconds": 51.0,
+      "p25_wall_seconds": 51.0,
+      "p75_wall_seconds": 52.5,
+      "min_wall_seconds": 51.0,
+      "median_runner_seconds": 115.0,
+      "median_stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 31.0,
+        "docker": 20.0
+      },
+      "pipeline": "optimized",
+      "cache": true,
+      "shards": 2
+    },
+    "optimized|cache=on|shards=4": {
+      "runs": 18,
+      "median_wall_seconds": 45.5,
+      "p25_wall_seconds": 41.2,
+      "p75_wall_seconds": 48.5,
+      "min_wall_seconds": 38.0,
+      "median_runner_seconds": 153.0,
+      "median_stages": {
+        "setup": 3.0,
+        "static": 0.5,
+        "tests": 21.0,
+        "docker": 21.5
+      },
+      "pipeline": "optimized",
+      "cache": true,
+      "shards": 4
+    },
+    "optimized|cache=on|shards=6": {
+      "runs": 3,
+      "median_wall_seconds": 39.0,
+      "p25_wall_seconds": 38.0,
+      "p75_wall_seconds": 44.5,
+      "min_wall_seconds": 37.0,
+      "median_runner_seconds": 182.0,
+      "median_stages": {
+        "setup": 3.0,
+        "static": 1.0,
+        "tests": 18.0,
+        "docker": 17.0
+      },
+      "pipeline": "optimized",
+      "cache": true,
+      "shards": 6
+    },
+    "optimized|cache=on|shards=8": {
+      "runs": 3,
+      "median_wall_seconds": 40.0,
+      "p25_wall_seconds": 39.0,
+      "p75_wall_seconds": 41.5,
+      "min_wall_seconds": 38.0,
+      "median_runner_seconds": 201.0,
+      "median_stages": {
+        "setup": 3.0,
+        "static": 0.0,
+        "tests": 17.0,
+        "docker": 16.0
+      },
+      "pipeline": "optimized",
+      "cache": true,
+      "shards": 8
+    }
+  }
+}

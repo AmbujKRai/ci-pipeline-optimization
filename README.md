@@ -11,6 +11,8 @@ production) for **ShopLite**, a small inventory and order management service. We
 measure how much **parallel test execution** and **build caching** speed up continuous
 integration.
 
+**🌐 Live application:** https://ci-pipeline-optimization-latest.onrender.com/ (API docs at [/docs](https://ci-pipeline-optimization-latest.onrender.com/docs); the free instance may need about a minute to wake up)
+
 **📊 Results dashboard:** https://ambujkrai.github.io/ci-pipeline-optimization/ (updated after every pipeline run)
 
 ## Results in brief

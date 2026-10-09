@@ -69,6 +69,9 @@ docker compose -f jenkins/docker-compose.yml up -d --build
 
 ## 5. Production on Render (one-time)
 
+The production service for this repository is live at
+<https://ci-pipeline-optimization-latest.onrender.com/>. To set up your own:
+
 1. Create a free account at <https://render.com>.
 2. **New → Web Service → Existing image**, enter
    `ghcr.io/ambujkrai/ci-pipeline-optimization:latest`. The image is public, so no

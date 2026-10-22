@@ -15,7 +15,7 @@ ENV PATH="/opt/venv/bin:${PATH}"
 COPY requirements.txt .
 # The cache mount keeps downloaded wheels between local builds without baking them in.
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install -r requirements.txt
+    pip install --timeout 120 --retries 10 -r requirements.txt
 
 # ---- runtime stage: slim image, non-root user, only what the app needs ---------------------
 FROM ${PYTHON_IMAGE} AS runtime

@@ -13,13 +13,16 @@ pipeline {
 
     environment {
         PIP_DISABLE_PIP_VERSION_CHECK = '1'
+        PIP_DEFAULT_TIMEOUT = '120'
+        PIP_RETRIES = '10'
         IMAGE = "shoplite:jenkins-baseline-${env.BUILD_NUMBER}"
     }
 
     stages {
         stage('Python environment (fresh)') {
             steps {
-                sh 'rm -rf .venv && python3 -m venv .venv && .venv/bin/pip install --quiet --no-cache-dir -r requirements-dev.txt'
+                // Fresh installs download every dependency; allow for slow PyPI responses.
+                sh 'rm -rf .venv && python3 -m venv .venv && .venv/bin/pip install --quiet --no-cache-dir --timeout 120 --retries 10 -r requirements-dev.txt'
             }
         }
 
